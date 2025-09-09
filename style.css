@@ -2,6 +2,17 @@ body{
     background-color: rgb(14, 5, 67);
 }
 
+@keyframes flashRed{
+    0%, 100% {background-color: transparent}
+    50% {background-color: rgb(255, 0, 0);}
+}
+
+.wrong{
+    animation-name: flashRed;
+    animation-duration: 0.3s;
+    animation-iteration-count: 3;
+}
+
 h1,h2{
     color:rgb(224, 198, 164);
     text-align: center;
@@ -11,6 +22,8 @@ h1,h2{
 
 h2{
     font-size: 30px;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .cube-container{
@@ -21,8 +34,16 @@ h2{
     justify-content: center;
 }
 
+@media (max-width: 500px) {
+  .cube-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+}
+
 .cube{
-    width: 100%;
+    width: 200px;
+    height: 200px;
     border: black 4px solid;
     border-radius: 10%;
     justify-self: center;
@@ -51,4 +72,74 @@ h2{
 .pressed {
   box-shadow: 0 0 20px white;
   background-color: grey;
+}
+
+
+.mid-sect{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.switch-container{
+    display: flex;
+    flex-direction: column;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.5rem;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 70px;
+  height: 34px;
+  margin: 0 20px;
+}
+
+.switch input {
+  opacity: 0;
+}
+
+.slider {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #ccc;
+  border-radius: 34px;
+  cursor: pointer;
+  background-color: #2196F3;
+}
+
+/* The circle knob inside the slider */
+.slider::before {
+  content: "";
+  position: absolute;
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.4s;
+}
+
+/* Move slider to the right only when it is checked */
+input:checked + .slider::before {
+  transform: translateX(36px);
+}
+
+#game-over{
+    display: flex;
+    justify-content: center;
+    margin: 0px 0px 10px 0px;
+}
+
+.disabled{
+    background-color: #ccc;
 }

@@ -9,8 +9,29 @@
 
 <body>
 
-    <h1>Press A Key to Start</h1>
-    <h2 id="level">Level 0</h2>
+    <h1>Press A Keyboard Key to Start</h1>
+
+    <div class="mid-sect">
+        <div class="switch-container">Faster
+        <label class="switch">
+            <input type="checkbox" id="speed" class="checkbox">
+            <span class="slider round"></span>
+        </label>
+        </div>
+
+        <h2 id="level">Level 0</h2>
+
+        <div class="switch-container">Harder
+            <label class="switch">
+                <input type="checkbox" id="difficulty" class="checkbox">
+                <span class="slider round"></span>
+            </label>
+        </div>
+
+    </div>
+
+    <h2 id="game-over"></h2>
+
     <div class="cube-container">
         <button class="cube green"></button>
         <button class="cube red"></button>

@@ -5,15 +5,22 @@ var gamePattern = [];
 var started = false;
 var level = 0;
 var iteration = 0;
+const sounds = {};
+var harder = false
+var faster = false;
 //#endregion
 
-//#region Game Logic
+//#region Event Handlers
 
 //Start the game on key press
 $(document).on("keydown", () => {
     if(!started){
         started = true;
-        generateNextSequence();
+        $("h1").text("Let's beging! ╰（‵□′）╯")
+        $("#game-over").text("");
+        $(".slider").addClass("disabled")
+        $(".checkbox").prop("disabled", true);
+        generateNextSequence();        
     }
 });
 
@@ -41,10 +48,31 @@ $(".cube").on("click", (e) => {
             started = false;
             level = 0;
             gamePattern = [];
-            $("#level").text("Game Over, Press Any Key to Restart");
+            $("h1").text("Press A Keyboard Key to Start")
+            $("#game-over").text("Game Over, Press Any Key to Restart");
+            $("body").addClass("wrong");
+            $(".slider").removeClass("disabled")
+            $(".checkbox").prop("disabled", false);
         }
     }
 });
+
+//Remove the red background after the animation ends
+$("body").on("animationend", () => {
+    $("body").removeClass("wrong");
+});
+
+$("#speed").on('change',(e) => {
+    faster = e.target.checked;
+});
+
+$("#difficulty").on('change',(e) => {
+    harder = e.target.checked;
+});
+
+//#endregion
+
+//#region Helper Functions
 
 function generateNextSequence(){
     userClickedPattern = [];
@@ -57,24 +85,21 @@ function generateNextSequence(){
     gamePattern.push(buttonColors[randomNumber]);
 
     //Animate and play sound for the chosen color
-    gamePattern.forEach((color,index) => {
-        setTimeout( () =>
-            {
-                playSound(color)
+    for (let index = (harder ? gamePattern.length - 1 : 0); index < gamePattern.length; index++) {
+        const color = gamePattern[index];
+        setTimeout(() => {
+            playSound(color)
                 effectPress(`.${color}`);
-            }, 600 * index
-        );
-    });
+        }, (600 / (faster ? 3 : 1))* index);
+    }
+
     iteration = 0;
 }
 
-//#endregion
-
-//#region Helper Functions
-
 //Plays corresponding sound
 function playSound(cube){
-    new Audio(`./sounds/${cube}.mp3`).play();
+    var soundToPlay = sounds[cube].cloneNode(); //Cloned so that sound can overlap
+    soundToPlay.play();
 }
 
 //Effect for button press
@@ -83,4 +108,14 @@ function effectPress(color){
     setTimeout(() => $(color).toggleClass("pressed"), 200);
 }
 
+function preLoadSounds(){
+    buttonColors.forEach((name) =>{
+    //loading sounds so no delay when page loads
+    sounds[name] = new Audio(`./sounds/${name}.mp3`);
+    });
+    sounds["wrong"] = new Audio(`./sounds/wrong.mp3`);
+}
+
 //#endregion
+
+preLoadSounds();
