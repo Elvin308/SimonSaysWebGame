@@ -1,3 +1,6 @@
+import { MusicPlayer } from "./classes/musicPlayer.js";
+import { SongLibrary } from "./classes/songLibrary.js";
+
 
 //#region Global Variables
 var buttonColors = ["red", "blue", "green", "yellow"];
@@ -5,10 +8,14 @@ var gamePattern = [];
 var started = false;
 var level = 0;
 var iteration = 0;
-const sounds = {};
 var harder = false
 var faster = false;
+
+const player = new MusicPlayer();
+const library = new SongLibrary();
 //#endregion
+
+player.preload(library.getAll());
 
 //#region Event Handlers
 
@@ -75,7 +82,6 @@ $("#difficulty").on('change',(e) => {
 //#region Helper Functions
 
 function generateNextSequence(){
-    userClickedPattern = [];
     $("#level").text(`Level ${++level}`);
 
     // Generate random number between 0-3
@@ -89,7 +95,7 @@ function generateNextSequence(){
         const color = gamePattern[index];
         setTimeout(() => {
             playSound(color)
-                effectPress(`.${color}`);
+            effectPress(`.${color}`);
         }, (600 / (faster ? 3 : 1))* index);
     }
 
@@ -98,8 +104,7 @@ function generateNextSequence(){
 
 //Plays corresponding sound
 function playSound(cube){
-    var soundToPlay = sounds[cube].cloneNode(); //Cloned so that sound can overlap
-    soundToPlay.play();
+    player.play(library.getSong(cube));
 }
 
 //Effect for button press
@@ -107,15 +112,6 @@ function effectPress(color){
     $(color).toggleClass("pressed");
     setTimeout(() => $(color).toggleClass("pressed"), 200);
 }
-
-function preLoadSounds(){
-    buttonColors.forEach((name) =>{
-    //loading sounds so no delay when page loads
-    sounds[name] = new Audio(`./sounds/${name}.mp3`);
-    });
-    sounds["wrong"] = new Audio(`./sounds/wrong.mp3`);
-}
-
 //#endregion
 
 preLoadSounds();
