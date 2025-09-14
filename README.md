@@ -23,7 +23,7 @@ A web-based memory game inspired by **Simon Says**. Press any keyboard key to st
 ## ⚡ How to Run  
 1. Clone the repo:  
    ```bash
-   git clone https://github.com/your-username/simon-says-music.git
+   git clone https://github.com/Elvin308/SimonSaysWebGame.git
 2. Open index.html in your browser.
 3. Press any key to begin and test your memory 🎵
 
