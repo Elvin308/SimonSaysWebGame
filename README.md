@@ -9,6 +9,7 @@ A web-based memory game inspired by **Simon Says**. Press any keyboard key to st
 👉 [Play Here](https://elvin308.github.io/SimonSaysWebGame/)  
 
 ## 📸 Preview  
+![SimonSays](https://github.com/user-attachments/assets/c12d1675-852e-40dd-b167-b6e1cf8baeda)
 
 
 ## ✨ Features  
